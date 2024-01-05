@@ -1,9 +1,24 @@
 import React from "react";
-
+import coinDetail from "./coinDetail";
 function Home() {
+  
+    const data=coinDetail.map((index) => (
+      <ul key={index.id} className="list-group">
+        <li className={`list-group-item d-flex justify-content-between align-items-start text-white ${index.mc>=0?'bg-success':'bg-danger'}`}>
+          <div className="ms-2 me-auto">
+            <div className="fw-bold">
+              {index.name} ({index.s_name})
+            </div>
+            {index.mc} %
+          </div>
+          <span className="mt-2">$ {index.price}</span>
+        </li>
+      </ul>
+    ));
+
   return (
     <>
-      <div className="row">
+      <div className="row p-2">
         <div className="col-12 col-lg-5">
           <div className="cointainer">
             <h2>Bitcoin</h2>
@@ -15,31 +30,7 @@ function Home() {
             </p>
           </div>
         </div>
-        <div className="col-12 col-lg-7">
-          <ul className="list-group">
-            <li className="list-group-item d-flex justify-content-between align-items-start">
-              <div className="ms-2 me-auto">
-                <div className="fw-bold">Subheading</div>
-                Content for list item
-              </div>
-              <span className="badge bg-primary rounded-pill">14</span>
-            </li>
-            <li className="list-group-item d-flex justify-content-between align-items-start">
-              <div className="ms-2 me-auto">
-                <div className="fw-bold">Subheading</div>
-                Content for list item
-              </div>
-              <span className="badge bg-primary rounded-pill">14</span>
-            </li>
-            <li className="list-group-item d-flex justify-content-between align-items-start">
-              <div className="ms-2 me-auto">
-                <div className="fw-bold">Subheading</div>
-                Content for list item
-              </div>
-              <span className="badge bg-primary rounded-pill">14</span>
-            </li>
-          </ul>
-        </div>
+        <div className="col-12 col-lg-7">{data}</div>
       </div>
     </>
   );

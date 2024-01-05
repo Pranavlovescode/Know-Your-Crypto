@@ -1,13 +1,14 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 
 function Navbar() {
   return (
     <>
       <nav className="navbar navbar-expand-lg" style={{backgroundColor:'#e3f2fd'}}>
         <div className="container-fluid">
-          <a className="navbar-brand pt-0" href="#">
+          <NavLink to='/' className="navbar-brand pt-0">
             <span className="text-primary" style={{fontSize:'22px'}}>K</span>now<span className="text-primary" style={{fontSize:'22px'}}>Y</span>our<span className="text-primary" style={{fontSize:'22px'}}>C</span>rypto
-          </a>
+          </NavLink >
           <button
             className="navbar-toggler"
             type="button"
@@ -22,14 +23,14 @@ function Navbar() {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-1 ">
               <li className="nav-item ">
-                <a className="nav-link active" aria-current="page" href="#">
+                <NavLink to='/' className="nav-link active" aria-current="page" >
                   Home
-                </a>
+                </NavLink>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#">
+                <NavLink to='/about' className="nav-link">
                   About
-                </a>
+                </NavLink>
               </li>
             </ul>
             <form className="d-flex" role="search">
