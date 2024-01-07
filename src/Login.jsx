@@ -9,19 +9,17 @@ function Login() {
   const loginData = async (e) => {
     e.preventDefault();
     console.log("Logging In");
-    const result = await signInWithEmailAndPassword(login, email, pass).then(
-      alert("Login Successfull")
-    );
+    const result = await signInWithEmailAndPassword(login, email, pass).then();
     console.log(result);
   };
 
   return (
     <>
       <div className="row">
-        <div className="col-12 col-lg-6">
+        <div className="flex flex-center">
           <div className="container my-5 p-4">
             <h2>Login Form</h2>
-            <form>
+            <form method="POST">
               <div className="mb-3 text-start">
                 <label htmlFor="exampleInputEmail1" className="form-label">
                   Email address

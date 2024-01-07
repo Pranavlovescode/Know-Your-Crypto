@@ -1,20 +1,34 @@
 import { React, useState } from "react";
 // import { getDatabase, set, ref } from "firebase/database";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
 import { app } from "./firebase";
 
 const signup = getAuth(app);
 
 function Signup() {
-  // const [username,setName]=useState('')
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
   const signupData = async (e) => {
     e.preventDefault();
     console.log("Signing Up the user");
-    const result=await createUserWithEmailAndPassword(signup, email, pass).then(alert('Success'))   
-   
-    console.log("Successful",result);
+    const result = await createUserWithEmailAndPassword(
+      signup,
+      email,
+      pass
+    ).then(async (res) => {
+      alert("Signup Successfull");
+      const user = res.user;
+      await updateProfile(user, {
+        displayName: name,
+      });
+      console.log("result", res);
+    });
+    console.log("Successful", result);
   };
 
   return (
@@ -23,21 +37,20 @@ function Signup() {
         <div className="col-12 col-lg-6">
           <div className="container my-5 p-4">
             <h2>Signup Form</h2>
-            <form>
-              {/* <div className="mb-3 text-start">
-                <label for="exampleInputPassword1" className="form-label">
+            <form>              
+              <div className="mb-3 text-start">
+                <label htmlFor="exampleInputEmail1" className="form-label">
                   Name
                 </label>
                 <input
                   type="text"
                   className="form-control"
-                  id="exampleInputPassword1"
-                  placeholder="Your Name"
-                  onChange={e=>setName(e.target.value)}
-                  value={username}
+                  id="exampleInputEmail1"
+                  aria-describedby="emailHelp"
+                  placeholder="Name"
+                  onChange={(e) => setName(e.target.value)}
+                  value={name}
                 />
-              </div> */}
-              <div className="mb-3 text-start">
                 <label htmlFor="exampleInputEmail1" className="form-label">
                   Email address
                 </label>

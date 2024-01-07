@@ -6,24 +6,58 @@ import About from "./components/navbar/About";
 import CoinDetails from "./components/CoinDetails";
 import Signup from "./Signup";
 import Login from "./Login";
-import LoginSuccess from "./LoginSuccess";
+import { useState, useEffect } from "react";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { app } from "./firebase";
+import MakeLogin from "./components/navbar/MakeLogin";
+// import LoginSuccess from "./LoginSuccess";
+
+const auth = getAuth(app);
 
 function App() {
+  const [isLogin, setIsLogin] = useState(null);
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        //user is login
+        setIsLogin(user);
+      } else {
+        //user is signout
+        setIsLogin(null);
+      }
+    });
+  }, []);
+
   return (
     <>
-      <Router>
-        <div className="App">
-          <Navbar />
-          <LoginSuccess/>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/crypto-details" element={<CoinDetails />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-          </Routes>
-        </div>
-      </Router>
+      {isLogin === null ? (
+        <Router>
+          <div className="App">
+            <Navbar />
+            <Routes>   
+              <Route path="/home" element={<MakeLogin />} />             
+              <Route path="/about" element={<About />} />             
+              <Route path="/home/login" element={<Login />} />
+              <Route path="/home/signup" element={<Signup />} />
+            </Routes>
+          </div>
+        </Router>
+      ) : (
+        <>
+          <Router>
+            <div className="App">
+              <Navbar />
+              <Routes>                
+                <Route path="/home/login" element={<Home />} />
+                <Route path="/home/signup" element={<Home />} />
+                <Route path="/home" element={<Home />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/crypto-details" element={<CoinDetails />} />                
+              </Routes>
+            </div>
+          </Router>
+        </>
+      )}
     </>
   );
 }
