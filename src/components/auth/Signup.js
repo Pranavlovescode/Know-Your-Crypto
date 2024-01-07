@@ -1,11 +1,12 @@
 import { React, useState } from "react";
 // import { getDatabase, set, ref } from "firebase/database";
+import { useNavigate } from "react-router-dom";
 import {
   getAuth,
   createUserWithEmailAndPassword,
   updateProfile,
 } from "firebase/auth";
-import { app } from "./firebase";
+import { app } from "../db/firebase";
 
 const signup = getAuth(app);
 
@@ -13,6 +14,8 @@ function Signup() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
+  const navigate = useNavigate();
+  
   const signupData = async (e) => {
     e.preventDefault();
     console.log("Signing Up the user");
@@ -27,7 +30,27 @@ function Signup() {
         displayName: name,
       });
       console.log("result", res);
+      try {
+        const response = await fetch(
+          "https://know-your-crypto-5b150-default-rtdb.firebaseio.com/Users.json",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(res),
+          }
+        );
+        if (response) {
+          alert("Data stored successfully");
+        } else {
+          alert("Some error occured");
+        }
+      } catch (error) {
+        console.error(error);
+      }
     });
+    navigate("/home");
     console.log("Successful", result);
   };
 
@@ -37,7 +60,7 @@ function Signup() {
         <div className="col-12 col-lg-6">
           <div className="container my-5 p-4">
             <h2>Signup Form</h2>
-            <form>              
+            <form>
               <div className="mb-3 text-start">
                 <label htmlFor="exampleInputEmail1" className="form-label">
                   Name

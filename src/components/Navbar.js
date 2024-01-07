@@ -2,7 +2,8 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { getAuth, onAuthStateChanged , signOut} from "firebase/auth";
-import { app } from "../firebase";
+import { app } from "./db/firebase";
+import './navbar/makeLogin.css'
 // import Login from "../Login";
 
 const auth = getAuth(app);
@@ -26,10 +27,10 @@ function Navbar() {
   return (
     <>
       <nav
-        className="navbar navbar-expand-lg"
-        style={{ backgroundColor: "#e3f2fd" }}
+        className="navbar navbar-expand-lg bg-blue"
+        // style={{ backgroundColor: "#e3f2fd" }}
       >
-        <div className="container-fluid">
+        <div className="container-fluid  ">
           <NavLink to="/home" className="navbar-brand pt-0">
             <span className="text-primary" style={{ fontSize: "22px" }}>
               K
@@ -58,7 +59,7 @@ function Navbar() {
           <div className="collapse navbar-collapse text-lg-start" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-1 ">
               <li className="nav-item ">
-                <NavLink to="/home" className="nav-link active" aria-current="page">
+                <NavLink to="/home" className="nav-link" >
                   Home
                 </NavLink>
               </li>

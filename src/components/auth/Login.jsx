@@ -1,22 +1,25 @@
 import React, { useState } from "react";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { app } from "./firebase";
+import { app } from "../db/firebase";
+import { useNavigate } from "react-router-dom";
 
 const login = getAuth(app);
 function Login() {
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
+  const navigate = useNavigate()
   const loginData = async (e) => {
     e.preventDefault();
     console.log("Logging In");
     const result = await signInWithEmailAndPassword(login, email, pass).then();
     console.log(result);
+    navigate('/home')
   };
 
   return (
     <>
-      <div className="row">
-        <div className="flex flex-center">
+      <div className="">
+        <div className="card w-25 shadow-sm bg-green-100">
           <div className="container my-5 p-4">
             <h2>Login Form</h2>
             <form method="POST">

@@ -1,8 +1,28 @@
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { app } from "../db/firebase";
+
+// import LoginSuccess from "./LoginSuccess";
+
+const auth = getAuth(app);
+
 // import coinDetail from "./coinDetail";
 function Home() {
   const [crypto, setCrypto] = useState([]);
+  const [isLogin, setIsLogin] = useState(null);
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        //user is login
+        setIsLogin(user);
+      } else {
+        //user is logged out
+        setIsLogin(null);
+      }
+    });
+  }, []);
+
 
   const fetchData = async () => {
     try {
@@ -31,10 +51,13 @@ function Home() {
     width: '40px',
     height: '40px'
   };
-
+  if(isLogin===null){
+    return("")
+  }
   return (
     
     <>
+      <h1 className="my-4">Hello {isLogin.displayName}</h1>
       <div className="container-fluid">
         <div className="row">
           <div className="col-12 col-lg-5 ">
