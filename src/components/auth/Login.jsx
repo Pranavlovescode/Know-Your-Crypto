@@ -13,7 +13,7 @@ function Login() {
     console.log("Logging In");
     const result = await signInWithEmailAndPassword(login, email, pass).then();
     console.log(result);
-    navigate('/home')
+    navigate('/')
   };
 
   return (

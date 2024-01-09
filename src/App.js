@@ -35,7 +35,7 @@ function App() {
           <div className="App">
             <Navbar />
             <Routes>
-              <Route path="/home" element={<MakeLogin />} />
+              <Route path="/" element={<MakeLogin />} />
               <Route path="/about" element={<About />} />
               <Route path="/home/login" element={<Login />} />
               <Route path="/home/signup" element={<Signup />} />
@@ -48,7 +48,7 @@ function App() {
             <div className="App">
               <Navbar />
               <Routes>
-                <Route path="/home" element={<Home />} />
+                <Route path="/" element={<Home />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/crypto-details" element={<CoinDetails />} />
               </Routes>

@@ -31,7 +31,7 @@ function Navbar() {
         // style={{ backgroundColor: "#e3f2fd" }}
       >
         <div className="container-fluid  ">
-          <NavLink to="/home" className="navbar-brand pt-0">
+          <NavLink to="/" className="navbar-brand pt-0">
             <span className="text-primary" style={{ fontSize: "22px" }}>
               K
             </span>
@@ -59,7 +59,7 @@ function Navbar() {
           <div className="collapse navbar-collapse text-lg-start" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-1 ">
               <li className="nav-item ">
-                <NavLink to="/home" className="nav-link" >
+                <NavLink to="/" className="nav-link" >
                   Home
                 </NavLink>
               </li>

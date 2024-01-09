@@ -50,7 +50,7 @@ function Signup() {
         console.error(error);
       }
     });
-    navigate("/home");
+    navigate("/");
     console.log("Successful", result);
   };
 
