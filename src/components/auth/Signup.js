@@ -1,5 +1,5 @@
 import { React, useState } from "react";
-// import { getDatabase, set, ref } from "firebase/database";
+import { getDatabase, set, ref } from "firebase/database";
 import { useNavigate } from "react-router-dom";
 import {
   getAuth,
@@ -14,44 +14,41 @@ function Signup() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
+  const [err, setErr] = useState("");
+
   const navigate = useNavigate();
-  
+
   const signupData = async (e) => {
     e.preventDefault();
-    console.log("Signing Up the user");
-    const result = await createUserWithEmailAndPassword(
-      signup,
-      email,
-      pass
-    ).then(async (res) => {
-      alert("Signup Successfull");
-      const user = res.user;
-      await updateProfile(user, {
-        displayName: name,
-      });
-      console.log("result", res);
-      try {
-        const response = await fetch(
-          "https://know-your-crypto-5b150-default-rtdb.firebaseio.com/Users.json",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(res),
-          }
-        );
-        if (response) {
-          alert("Data stored successfully");
-        } else {
-          alert("Some error occured");
-        }
-      } catch (error) {
-        console.error(error);
-      }
+
+    const userData = { name, email, pass };
+    const response = await fetch("/api/signup", {
+      method: "POST",
+      body: JSON.stringify(userData),
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
+    const result = await response.json();
+    if (response.ok) {
+      setErr(null);
+      console.log(result);
+    } else {
+      setErr(result.err);
+    }
+
+    console.log("Signing Up the user");
+    await createUserWithEmailAndPassword(signup, email, pass).then(
+      async (res) => {
+        alert("Signup Successfull");
+        const user = res.user;
+        await updateProfile(user, {
+          displayName: name,
+        });
+        console.log("result", res);
+      }
+    );
     navigate("/");
-    console.log("Successful", result);
   };
 
   return (
@@ -60,7 +57,7 @@ function Signup() {
         <div className="col-12 col-lg-6">
           <div className="container my-5 p-4">
             <h2>Signup Form</h2>
-            <form>
+            <form onSubmit={signupData}>
               <div className="mb-3 text-start">
                 <label htmlFor="exampleInputEmail1" className="form-label">
                   Name
@@ -103,11 +100,7 @@ function Signup() {
                   value={pass}
                 />
               </div>
-              <button
-                onClick={signupData}
-                type="submit"
-                className="btn btn-primary text-center"
-              >
+              <button type="submit" className="btn btn-primary text-center">
                 Submit
               </button>
             </form>

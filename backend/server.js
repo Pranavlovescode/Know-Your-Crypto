@@ -14,7 +14,7 @@ app.get("/", (req, res) => {
 
 
 // Middlewares
-app.use("/signup", signupRoute);
+app.use("/api/signup", signupRoute);
 app.use('/show-all-users',data)
 
 
