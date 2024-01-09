@@ -2,27 +2,33 @@ import React, { useState } from "react";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { app } from "../db/firebase";
 import { useNavigate } from "react-router-dom";
+import "./login.css";
 
 const login = getAuth(app);
 function Login() {
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
-  const navigate = useNavigate()
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
   const loginData = async (e) => {
     e.preventDefault();
     console.log("Logging In");
-    const result = await signInWithEmailAndPassword(login, email, pass).then();
+    const result = await signInWithEmailAndPassword(login, email, pass)
+      .then(console.log("Success"))
+      .catch((err) => {
+        setError(err.message);
+      });
     console.log(result);
-    navigate('/')
+    navigate("/");
   };
 
   return (
     <>
-      <div className="">
-        <div className="card w-25 shadow-sm bg-green-100">
+      <div className="py-3 d-flex justify-content-center bg-blue-dark align-items-center">
+        <div className="form shadow">
           <div className="container my-5 p-4">
-            <h2>Login Form</h2>
-            <form method="POST">
+            <h2 className="fw-bolder">Login Form</h2>
+            <form onSubmit={loginData}>
               <div className="mb-3 text-start">
                 <label htmlFor="exampleInputEmail1" className="form-label">
                   Email address
@@ -53,8 +59,9 @@ function Login() {
                   value={pass}
                 />
               </div>
+              <b className="text-danger">{error}</b>
               <button
-                onClick={loginData}
+                
                 type="submit"
                 className="btn btn-primary text-center"
               >

@@ -1,5 +1,4 @@
 import { React, useState } from "react";
-import { getDatabase, set, ref } from "firebase/database";
 import { useNavigate } from "react-router-dom";
 import {
   getAuth,
@@ -7,56 +6,73 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { app } from "../db/firebase";
+import './login.css'
 
 const signup = getAuth(app);
 
 function Signup() {
+  
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
   const [err, setErr] = useState("");
 
+  const showErrorMessage =()=>{
+    setTimeout(()=>{
+      setErr(null)
+    },5000)
+  }
+
   const navigate = useNavigate();
 
   const signupData = async (e) => {
     e.preventDefault();
-
-    const userData = { name, email, pass };
-    const response = await fetch("/api/signup", {
-      method: "POST",
-      body: JSON.stringify(userData),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const result = await response.json();
-    if (response.ok) {
-      setErr(null);
-      console.log(result);
-    } else {
-      setErr(result.err);
+    if (!name || !email || !pass) {
+      setErr("Please fill all the fields");
     }
-
-    console.log("Signing Up the user");
-    await createUserWithEmailAndPassword(signup, email, pass).then(
-      async (res) => {
-        alert("Signup Successfull");
-        const user = res.user;
-        await updateProfile(user, {
-          displayName: name,
-        });
-        console.log("result", res);
-      }
-    );
-    navigate("/");
+    const userData = { name, email, pass };
+    try {
+      await createUserWithEmailAndPassword(signup, email, pass)
+        .then(async (res) => {
+          alert("Signup Successfull");
+          const user = res.user;
+          await updateProfile(user, {
+            displayName: name,
+          });
+          console.log("result", res);
+          navigate("/");
+          try {
+            const response = await fetch("/api/signup", {
+              method: "POST",
+              body: JSON.stringify(userData),
+              headers: {
+                "Content-Type": "application/json",
+              },
+            });
+            const result = await response.json();
+            if (response.ok) {
+              setErr(null);
+              console.log(result);
+            } else {
+              // setErr(result.message);
+            }
+          } catch (error) {
+            setErr("Something went wrong");
+          }
+        })
+        .catch((err) => setErr(err.message));
+    } catch (error) {
+      setErr(err.message);
+      console.log(error.message);
+    }
   };
 
   return (
     <>
-      <div className="row">
-        <div className="col-12 col-lg-6">
+      <div className="row d-flex justify-content-center py-3 bg-blue-dark align-items-center">
+        <div className="col-12 col-lg-6 w-50 w-lg-100 shadow form-signup">
           <div className="container my-5 p-4">
-            <h2>Signup Form</h2>
+            <h2 className="fw-bolder">Signup Form</h2>
             <form onSubmit={signupData}>
               <div className="mb-3 text-start">
                 <label htmlFor="exampleInputEmail1" className="form-label">
@@ -70,7 +86,9 @@ function Signup() {
                   placeholder="Name"
                   onChange={(e) => setName(e.target.value)}
                   value={name}
+                  // required:true
                 />
+
                 <label htmlFor="exampleInputEmail1" className="form-label">
                   Email address
                 </label>
@@ -82,6 +100,7 @@ function Signup() {
                   placeholder="example@gmail.com"
                   onChange={(e) => setEmail(e.target.value)}
                   value={email}
+                  // required:true
                 />
                 <div id="emailHelp" className="form-text text-start">
                   We'll never share your email with anyone else.
@@ -99,6 +118,9 @@ function Signup() {
                   onChange={(e) => setPass(e.target.value)}
                   value={pass}
                 />
+                <b className="text-danger">{err}</b>
+                {showErrorMessage}
+                
               </div>
               <button type="submit" className="btn btn-primary text-center">
                 Submit
