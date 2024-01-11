@@ -11,7 +11,7 @@ function MakeLogin() {
       <div className="bg-blue-flex-3">
         <h2 className="py-4 text-blue">Welcome to Know Your Crypto</h2>
         <div className="d-flex py-5  flex-column flex-lg-row align-items-center lg-vh-100 bg-blue-flex-1">
-          <img src="/img/coins.png" alt="background" srcset="" />
+          <img src="/img/coins.png" alt="background" className="rotate" />
           <div className="container py-5">
             <h4 className="py-3 text-blue1">
               We will let you know all about Crypto
@@ -52,7 +52,7 @@ function MakeLogin() {
               </button>
             </NavLink>
           </div>
-          <img src="/img/trading.png" alt="background" srcset="" />
+          <img src="/img/trading.png" alt="background" className="rotate" />
         </div>
         <div className="d-flex py-5  flex-column flex-lg-row align-items-center lg-vh-100 ">
           <img src="/img/blockchain.png" alt="background" className="rotate" />

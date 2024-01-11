@@ -8,18 +8,24 @@ const login = getAuth(app);
 function Login() {
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
-  const [error, setError] = useState(null);
+  const [error, setError] = useState("");
   const navigate = useNavigate();
   const loginData = async (e) => {
     e.preventDefault();
     console.log("Logging In");
-    const result = await signInWithEmailAndPassword(login, email, pass)
-      .then(console.log("Success"))
+    await signInWithEmailAndPassword(login, email, pass)
+      .then((result)=>{
+        console.log(result)
+        navigate("/");
+      })
       .catch((err) => {
         setError(err.message);
+        setTimeout(()=>{
+          setError(null)
+        },5000)
       });
-    console.log(result);
-    navigate("/");
+    // console.log(result);
+    
   };
 
   return (
@@ -60,6 +66,7 @@ function Login() {
                 />
               </div>
               <b className="text-danger">{error}</b>
+              <br/>
               <button
                 
                 type="submit"

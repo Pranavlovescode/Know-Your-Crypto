@@ -22,7 +22,18 @@
 }
 
 .rotate {
-    animation: rotate 20s infinite linear;
+    width: 500px;
+    height: 500px;
+    /* animation: rotate 20s infinite linear; */
+}
+
+@media  screen and (max-width:500px) {
+    .rotate {
+        width: 350px;
+        height: 350px;
+        /* animation: rotate 20s infinite linear; */
+    }
+    
 }
 
 @keyframes rotate {

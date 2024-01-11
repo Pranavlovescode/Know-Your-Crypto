@@ -30,7 +30,7 @@ function Navbar() {
         className="navbar navbar-expand-lg bg-blue position-sticky w-100"
         // style={{ backgroundColor: "#e3f2fd" }}
       >
-        <div className="container-fluid  ">
+        <div className="container-fluid  fw-bold">
           <NavLink to="/" className="navbar-brand pt-0">
             <span className="text-primary" style={{ fontSize: "22px" }}>
               K
@@ -66,6 +66,11 @@ function Navbar() {
               <li className="nav-item">
                 <NavLink to="/about" className="nav-link">
                   About
+                </NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink to="/contact-me" className="nav-link">
+                  Contact Us
                 </NavLink>
               </li>
             </ul>

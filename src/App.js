@@ -10,6 +10,8 @@ import { useState, useEffect } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { app } from "./components/db/firebase";
 import MakeLogin from "./components/navbar/MakeLogin";
+import ContactMe from "./components/ContactMe";
+
 // import LoginSuccess from "./LoginSuccess";
 
 const auth = getAuth(app);
@@ -39,6 +41,7 @@ function App() {
               <Route path="/about" element={<About />} />
               <Route path="/home/login" element={<Login />} />
               <Route path="/home/signup" element={<Signup />} />
+              <Route path="/contact-me" element={<ContactMe />} />
             </Routes>
           </div>
         </Router>
@@ -50,6 +53,7 @@ function App() {
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/about" element={<About />} />
+                <Route path="/contact-me" element={<ContactMe />} />
                 <Route path="/crypto-details" element={<CoinDetails />} />
               </Routes>
             </div>

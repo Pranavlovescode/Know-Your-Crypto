@@ -11,17 +11,18 @@ import './login.css'
 const signup = getAuth(app);
 
 function Signup() {
+ 
   
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
   const [err, setErr] = useState("");
 
-  const showErrorMessage =()=>{
-    setTimeout(()=>{
-      setErr(null)
-    },5000)
-  }
+  // const showErrorMessage =()=>{
+  //   setTimeout(()=>{
+  //     setErr(null)
+  //   },5000)
+  // }
 
   const navigate = useNavigate();
 
@@ -60,7 +61,12 @@ function Signup() {
             setErr("Something went wrong");
           }
         })
-        .catch((err) => setErr(err.message));
+        .catch((err) => {
+          setErr(err.message)
+          setTimeout(()=>{
+            setErr(null)
+          },5000)
+        });
     } catch (error) {
       setErr(err.message);
       console.log(error.message);
@@ -69,8 +75,8 @@ function Signup() {
 
   return (
     <>
-      <div className="row d-flex justify-content-center py-3 bg-blue-dark align-items-center">
-        <div className="col-12 col-lg-6 w-50 w-lg-100 shadow form-signup">
+      <div className="row d-flex justify-content-center py-3 bg-blue-dark align-items-center m-0">
+        <div className="col-12 p-0 col-lg-6 w-lg-100 shadow form-signup signup1">
           <div className="container my-5 p-4">
             <h2 className="fw-bolder">Signup Form</h2>
             <form onSubmit={signupData}>
@@ -88,7 +94,7 @@ function Signup() {
                   value={name}
                   // required:true
                 />
-
+                <br/>
                 <label htmlFor="exampleInputEmail1" className="form-label">
                   Email address
                 </label>
@@ -102,10 +108,12 @@ function Signup() {
                   value={email}
                   // required:true
                 />
+                
                 <div id="emailHelp" className="form-text text-start">
                   We'll never share your email with anyone else.
                 </div>
               </div>
+              <br/>
               <div className="mb-3 text-start">
                 <label htmlFor="exampleInputPassword1" className="form-label">
                   Password
@@ -118,8 +126,7 @@ function Signup() {
                   onChange={(e) => setPass(e.target.value)}
                   value={pass}
                 />
-                <b className="text-danger">{err}</b>
-                {showErrorMessage}
+                <b className="text-danger">{err}</b>               
                 
               </div>
               <button type="submit" className="btn btn-primary text-center">

@@ -3,6 +3,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const signupRoute = require("./routes/signup");
 const data = require('./routes/showAllUsers')
+const form = require('./routes/contactForm')
 
 const app = express();
 app.use(express.json());
@@ -16,6 +17,7 @@ app.get("/", (req, res) => {
 // Middlewares
 app.use("/api/signup", signupRoute);
 app.use('/show-all-users',data)
+app.use('/api/contact-me',form)
 
 
 // DB connection
