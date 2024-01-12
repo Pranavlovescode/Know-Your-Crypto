@@ -7,6 +7,7 @@ import {
 } from "firebase/auth";
 import { app } from "../db/firebase";
 import './login.css'
+import './signup.css'
 
 const signup = getAuth(app);
 

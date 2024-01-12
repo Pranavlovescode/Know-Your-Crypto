@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { app } from "../db/firebase";
+import './home.css'
 
 // import LoginSuccess from "./LoginSuccess";
 
@@ -22,7 +23,6 @@ function Home() {
       }
     });
   }, []);
-
 
   const fetchData = async () => {
     try {
@@ -48,50 +48,58 @@ function Home() {
     return () => clearInterval(intervalId);
   }, []);
   const styles = {
-    width: '40px',
-    height: '40px'
+    width: "40px",
+    height: "40px",
   };
-  if(isLogin===null){
-    return("")
+  if (isLogin === null) {
+    return "";
   }
   return (
-    
     <>
-      <h1 className="my-4">Hello {isLogin.displayName}</h1>
-      <div className="container-fluid">
-        <div className="row">
-          <div className="col-12 col-lg-5 ">
-            <div className="cointainer-fluid">
-              <h2>Bitcoin</h2>
-              <p>
-                Bitcoin is the first decentralized cryptocurrency. Nodes in the
-                peer-to-peer bitcoin network verify transactions through
-                cryptography and record them in a public distributed ledger,
-                called a blockchain, without central oversight.
-              </p>
+      <div className="home">
+        <h1 className="py-4">Hello {isLogin.displayName}</h1>
+        <div className="container-fluid">
+          <div className="row">
+            <div className="col-12 col-lg-5 ">
+              <div className="cointainer-fluid">
+                <h2>Bitcoin</h2>
+                <p>
+                  Bitcoin is the first decentralized cryptocurrency. Nodes in
+                  the peer-to-peer bitcoin network verify transactions through
+                  cryptography and record them in a public distributed ledger,
+                  called a blockchain, without central oversight.
+                </p>
+              </div>
             </div>
-          </div>
-          <div className="col-12 col-lg-7">
-            {crypto.map((index) => (
-              <ul key={index.id} className="list-group">
-                <NavLink to={'/crypto-details'}
-                  className={`list-group-item d-flex justify-content-between align-items-start text-white ${
-                    index.market_cap_change_percentage_24h >= 0
-                      ? "bg-success"
-                      : "bg-danger"
-                  }`}
-                >
-                  <div className="ms-2 me-auto">
-                    <img src={index.image} alt={index.name} srcset="" style={styles} className="mx-2"/>
-                    <div className="fw-bold">
-                      {index.name} ({index.symbol})
+            <div className="col-12 col-lg-7">
+              {crypto.map((index) => (
+                <ul key={index.id} className="list-group">
+                  <NavLink
+                    to={"/crypto-details"}
+                    className={`list-group-item d-flex justify-content-between align-items-start text-white ${
+                      index.market_cap_change_percentage_24h >= 0
+                        ? "bg-success"
+                        : "bg-danger"
+                    }`}
+                  >
+                    <div className="ms-2 me-auto">
+                      <img
+                        src={index.image}
+                        alt={index.name}
+                        srcset=""
+                        style={styles}
+                        className="mx-2"
+                      />
+                      <div className="fw-bold">
+                        {index.name} ({index.symbol})
+                      </div>
+                      {index.market_cap_change_percentage_24h} %
                     </div>
-                    {index.market_cap_change_percentage_24h} %
-                  </div>
-                  <span className="mt-2">&#x20b9; {index.current_price}</span>
-                </NavLink>
-              </ul>
-            ))}
+                    <span className="mt-2">&#x20b9; {index.current_price}</span>
+                  </NavLink>
+                </ul>
+              ))}
+            </div>
           </div>
         </div>
       </div>

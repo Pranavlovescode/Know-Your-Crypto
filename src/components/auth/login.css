@@ -12,12 +12,7 @@
     }
     
 }
-@media screen and (max-width:800px) {
-    .signup1{
-        width: 90%;
-    }
-    
-}
+
 .form-signup{
     
     background-color: #5FBDFF;
@@ -28,4 +23,6 @@
 }
 .bg-blue-dark{
     background-color: #0766AD;
+    width: 100%;
+    height: 100vh;
 }
