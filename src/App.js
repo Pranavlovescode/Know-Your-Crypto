@@ -54,7 +54,7 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/contact-me" element={<ContactMe />} />
-                <Route path="/crypto-details" element={<CoinDetails />} />
+                <Route path="/crypto-details/:name/:price" element={<CoinDetails />} />
               </Routes>
             </div>
           </Router>

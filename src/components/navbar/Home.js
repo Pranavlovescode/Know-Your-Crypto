@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { app } from "../db/firebase";
 import './home.css'
@@ -10,6 +10,7 @@ const auth = getAuth(app);
 
 // import coinDetail from "./coinDetail";
 function Home() {
+  const navigate = useNavigate();
   const [crypto, setCrypto] = useState([]);
   const [isLogin, setIsLogin] = useState(null);
   useEffect(() => {
@@ -74,8 +75,8 @@ function Home() {
             <div className="col-12 col-lg-7">
               {crypto.map((index) => (
                 <ul key={index.id} className="list-group">
-                  <NavLink
-                    to={"/crypto-details"}
+                  <li
+                    onClick={()=>navigate(`/crypto-details/${index.name}/${index.current_price}`)}
                     className={`list-group-item d-flex justify-content-between align-items-start text-white ${
                       index.market_cap_change_percentage_24h >= 0
                         ? "bg-success"
@@ -96,7 +97,7 @@ function Home() {
                       {index.market_cap_change_percentage_24h} %
                     </div>
                     <span className="mt-2">&#x20b9; {index.current_price}</span>
-                  </NavLink>
+                  </li>
                 </ul>
               ))}
             </div>
