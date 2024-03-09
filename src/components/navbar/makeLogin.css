@@ -1,0 +1,46 @@
+.bg-blue{
+    background-color: rgb(98, 198, 255);
+}
+.text-blue{
+    color: rgb(15, 82, 121);
+    font-weight: 700;
+    font-size: 40px;
+}
+.text-blue1{
+    color: rgb(45, 132, 182);
+    font-weight: 700;
+    
+}
+.bg-blue1{
+    background-color: rgb(220, 242, 255);
+    height: 100%;
+}
+
+
+.bg-blue-flex-3{
+    background-color: rgb(165, 222, 255);
+}
+
+.rotate {
+    width: 500px;
+    height: 500px;
+    /* animation: rotate 20s infinite linear; */
+}
+
+@media  screen and (max-width:500px) {
+    .rotate {
+        width: 350px;
+        height: 350px;
+        /* animation: rotate 20s infinite linear; */
+    }
+    
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}

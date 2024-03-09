@@ -1,0 +1,28 @@
+.form{
+    width: 40%;
+    background-color: #5FBDFF;
+    color: #0766AD;
+    font-weight: 700;
+    border-radius: 5px;
+    
+}
+@media screen and (max-width:800px) {
+    .form{
+        width: 90%;
+    }
+    
+}
+
+.form-signup{
+    
+    background-color: #5FBDFF;
+    color: #0766AD;
+    font-weight: 700;
+    border-radius: 5px;
+    
+}
+.bg-blue-dark{
+    background-color: #0766AD;
+    width: 100%;
+    height: 100vh;
+}
