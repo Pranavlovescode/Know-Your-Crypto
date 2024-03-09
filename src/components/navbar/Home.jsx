@@ -76,7 +76,7 @@ function Home() {
               {crypto.map((index) => (
                 <ul key={index.id} className="list-group">
                   <li
-                    onClick={()=>navigate(`/crypto-details/${index.name}/${index.current_price}`)}
+                    onClick={()=>navigate(`/crypto-details/${index.name}/${index.current_price}/${index.market_cap_change_percentage_24h}/${index.symbol}/${index.high_24h}/${index.low_24h}/${index.market_cap}/${index.total_volume}/${index.circulating_supply}/${index.total_supply}`)}
                     className={`list-group-item d-flex justify-content-between align-items-start text-white ${
                       index.market_cap_change_percentage_24h >= 0
                         ? "bg-success"
