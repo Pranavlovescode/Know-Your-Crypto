@@ -32,7 +32,7 @@ function CoinDetails() {
   // useEffect(()=>{
   //   fetchData();
   // },[])
-  return (-
+  return (
     <>
       <h1 className="text-center">The all info you want about crypto</h1>
       <h1 className="text-center">Details</h1>
