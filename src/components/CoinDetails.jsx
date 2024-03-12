@@ -1,8 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 // import { useState , useEffect} from 'react';
 import { useParams } from "react-router-dom";
 
 function CoinDetails() {
+  useEffect(() => {
+    // Create script element
+    const script = document.createElement("script");
+    script.src =
+      "https://www.livecoinwatch.com/static/lcw-widget.js";
+    script.async = true;
+
+    // Append script to the body
+    document.body.appendChild(script);
+
+    return () => {
+      // Remove script from the body on component unmount
+      document.body.removeChild(script);
+    };
+  }, []);
   const {
     name,
     price,
@@ -14,6 +29,7 @@ function CoinDetails() {
     total_volume,
     circulating_supply,
     total_supply,
+    id
   } = useParams();
 
   // const [crypto, setCrypto] = useState([]);
@@ -57,12 +73,12 @@ function CoinDetails() {
               <b className="text-danger">{market_cap_change_percentage_24h}%</b>
             </p>
           )}
-          <p>
+          {/* <p>
             High 24h :<b> &#x20b9;{high_24h}</b>
           </p>
           <p>
             Low 24h :<b> &#x20b9;{low_24h}</b>
-          </p>
+          </p> */}
           <p>
             Market Cap :<b> &#x20b9;{market_cap}</b>
           </p>
@@ -89,7 +105,8 @@ function CoinDetails() {
           </p>
         </div>
 
-        <div className="d-flex flex-column">This is graph section
+        <div className="d-flex flex-column">
+        <div style={{width:'50%', height:'500px'}} class="livecoinwatch-widget-1" lcw-coin={symbol} lcw-base="INR" lcw-secondary={symbol} lcw-period="d" lcw-color-tx="#000000" lcw-color-pr="#00d084" lcw-color-bg="#ffffff" lcw-border-w="1" lcw-digits="9" ></div>
         </div>
 
         {/* <img src={image} alt="crypto" /> */}

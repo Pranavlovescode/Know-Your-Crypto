@@ -28,7 +28,22 @@ function Home() {
   const fetchData = async () => {
     try {
       const response = await fetch(
-        "https://api.coingecko.com/api/v3/coins/markets?vs_currency=inr&order=market_cap_desc&per_page=20&page=1&sparkline=false&locale=en&precision=2"
+        "https://api.livecoinwatch.com/coins/list",
+        {
+          method: "POST",
+          headers: new Headers({
+            "content-type": "application/json",
+            "x-api-key": "36735d2c-0f11-4f46-bf1f-c881d551e21b",
+          }),
+          body: JSON.stringify({
+            currency: "INR",
+            sort: "rank",
+            order: "ascending",
+            offset: 0,
+            limit: 10,
+            meta: true,
+          }),
+        }
       );
       const data = await response.json();
       setCrypto(data);
@@ -37,7 +52,6 @@ function Home() {
       console.error("Error fetching data:", error);
     }
   };
-
   useEffect(() => {
     // Fetch data initially
     fetchData();
@@ -48,6 +62,7 @@ function Home() {
     // Cleanup interval on component unmount
     return () => clearInterval(intervalId);
   }, []);
+
   const styles = {
     width: "40px",
     height: "40px",
@@ -76,27 +91,27 @@ function Home() {
               {crypto.map((index) => (
                 <ul key={index.id} className="list-group">
                   <li
-                    onClick={()=>navigate(`/crypto-details/${index.name}/${index.current_price}/${index.market_cap_change_percentage_24h}/${index.symbol}/${index.high_24h}/${index.low_24h}/${index.market_cap}/${index.total_volume}/${index.circulating_supply}/${index.total_supply}`)}
+                    onClick={()=>navigate(`/crypto-details/${index.name}/${index.rate}/${index.delta.hour}/${index.code}/${index.high_24h}/${index.low_24h}/${index.cap}/${index.volume}/${index.maxSupply}/${index.totalSupply}/${index.id}`)}
                     className={`list-group-item d-flex justify-content-between align-items-start text-white ${
-                      index.market_cap_change_percentage_24h >= 0
+                      index.delta.hour >= 0
                         ? "bg-success"
                         : "bg-danger"
                     }`}
                   >
                     <div className="ms-2 me-auto">
                       <img
-                        src={index.image}
+                        src={index.png64}
                         alt={index.name}
                         srcset=""
                         style={styles}
                         className="mx-2"
                       />
                       <div className="fw-bold">
-                        {index.name} ({index.symbol})
+                        {index.name} ({index.code})
                       </div>
-                      {index.market_cap_change_percentage_24h} %
+                      {index.delta.hour} %
                     </div>
-                    <span className="mt-2">&#x20b9; {index.current_price}</span>
+                    <span className="mt-2">&#x20b9; {index.rate}</span>
                   </li>
                 </ul>
               ))}
