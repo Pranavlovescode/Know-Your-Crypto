@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { app } from "../db/firebase";
-import './home.css'
+import "./home.css";
 
 // import LoginSuccess from "./LoginSuccess";
 
@@ -27,24 +27,21 @@ function Home() {
 
   const fetchData = async () => {
     try {
-      const response = await fetch(
-        "https://api.livecoinwatch.com/coins/list",
-        {
-          method: "POST",
-          headers: new Headers({
-            "content-type": "application/json",
-            "x-api-key": "36735d2c-0f11-4f46-bf1f-c881d551e21b",
-          }),
-          body: JSON.stringify({
-            currency: "INR",
-            sort: "rank",
-            order: "ascending",
-            offset: 0,
-            limit: 10,
-            meta: true,
-          }),
-        }
-      );
+      const response = await fetch("https://api.livecoinwatch.com/coins/list", {
+        method: "POST",
+        headers: new Headers({
+          "content-type": "application/json",
+          "x-api-key": "36735d2c-0f11-4f46-bf1f-c881d551e21b",
+        }),
+        body: JSON.stringify({
+          currency: "INR",
+          sort: "rank",
+          order: "ascending",
+          offset: 0,
+          limit: 10,
+          meta: true,
+        }),
+      });
       const data = await response.json();
       setCrypto(data);
       console.log(data);
@@ -52,16 +49,32 @@ function Home() {
       console.error("Error fetching data:", error);
     }
   };
+  const loadScript=()=> {
+    const script = document.createElement("script");
+    script.src = "https://www.livecoinwatch.com/static/lcw-widget.js";
+    script.async = true;
+    // Append script to the body
+    document.body.appendChild(script);
+    console.log("Script Loaded");
+    
+  }
   useEffect(() => {
     // Fetch data initially
     fetchData();
-
+    loadScript();
     // Set up interval to fetch data every 5 minutes (adjust as needed)
     const intervalId = setInterval(fetchData, 5 * 60 * 1000);
 
-    // Cleanup interval on component unmount
-    return () => clearInterval(intervalId);
+   
+    return () => {
+      // Remove script from the body on component unmount
+      // document.body.removeChild(script);
+      // Cleanup interval on component unmount
+      
+      clearInterval(intervalId);
+    };
   }, []);
+
 
   const styles = {
     width: "40px",
@@ -91,14 +104,16 @@ function Home() {
               {crypto.map((index) => (
                 <ul key={index.id} className="list-group">
                   <li
-                    onClick={()=>navigate(`/crypto-details/${index.name}/${index.rate}/${index.delta.hour}/${index.code}/${index.high_24h}/${index.low_24h}/${index.cap}/${index.volume}/${index.maxSupply}/${index.totalSupply}/${index.id}`)}
+                    onClick={() =>
+                      navigate(
+                        `/crypto-details/${index.name}/${index.rate}/${index.delta.hour}/${index.code}/${index.high_24h}/${index.low_24h}/${index.cap}/${index.volume}/${index.maxSupply}/${index.totalSupply}/${index.id}`
+                      )
+                    }
                     className={`list-group-item d-flex justify-content-between align-items-start text-white ${
-                      index.delta.hour >= 0
-                        ? "bg-success"
-                        : "bg-danger"
+                      index.delta.hour >= 0 ? "bg-success" : "bg-danger"
                     }`}
                   >
-                    <div className="ms-2 me-auto">
+                    {/* <div className="ms-2 me-auto">
                       <img
                         src={index.png64}
                         alt={index.name}
@@ -111,7 +126,16 @@ function Home() {
                       </div>
                       {index.delta.hour} %
                     </div>
-                    <span className="mt-2">&#x20b9; {index.rate}</span>
+                    <span className="mt-2">&#x20b9; {index.rate}</span> */}
+                    <div
+                      class="livecoinwatch-widget-2"
+                      lcw-coin={index.code}
+                      lcw-base="INR"
+                      lcw-period="d"
+                      lcw-color-tx="#000000"
+                      lcw-color-bg="#ffffff"
+                      lcw-border-w="0"
+                    ></div>
                   </li>
                 </ul>
               ))}

@@ -17,6 +17,7 @@ function Login() {
       .then((result)=>{
         console.log(result)
         navigate("/");
+        alert("Login Successfull")
       })
       .catch((err) => {
         setError(err.message);

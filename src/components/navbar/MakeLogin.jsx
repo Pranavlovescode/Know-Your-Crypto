@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./makeLogin.css";
 import { NavLink } from "react-router-dom";
 import first from "../../assets/img/coins.png";
@@ -8,10 +8,25 @@ function MakeLogin() {
   // const styles={
   //   innerWidth:'100px',
   //   backgroundPosition : "contain"
+  useEffect(() => {
+    // Create script element
+    const script = document.createElement("script");
+    script.src = "https://www.livecoinwatch.com/static/lcw-widget.js";
+    script.async = true;
+
+    // Append script to the body
+    document.body.appendChild(script);
+
+    return () => {
+      // Remove script from the body on component unmount
+      document.body.removeChild(script);
+    };
+  }, []);
   // }
   return (
     <>
       <div className="bg-blue-flex-3">
+       <div className="livecoinwatch-widget-5 m-0" lcw-base="INR" lcw-color-tx="#999999" lcw-marquee-1="coins" lcw-marquee-2="coins" lcw-marquee-items="30"  ></div>
         <h2 className="py-4 text-blue">Welcome to Know Your Crypto</h2>
         <div className="d-flex py-5  flex-column flex-lg-row align-items-center lg-vh-100 bg-blue-flex-1">
           <img src={first} alt="first" className="rotate" />
