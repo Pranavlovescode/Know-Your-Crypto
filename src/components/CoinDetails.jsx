@@ -6,8 +6,7 @@ function CoinDetails() {
   useEffect(() => {
     // Create script element
     const script = document.createElement("script");
-    script.src =
-      "https://www.livecoinwatch.com/static/lcw-widget.js";
+    script.src = "https://www.livecoinwatch.com/static/lcw-widget.js";
     script.async = true;
 
     // Append script to the body
@@ -21,7 +20,7 @@ function CoinDetails() {
   const {
     name,
     price,
-    market_cap_change_percentage_24h,
+    price_change_24h,
     symbol,
     high_24h,
     low_24h,
@@ -29,7 +28,7 @@ function CoinDetails() {
     total_volume,
     circulating_supply,
     total_supply,
-    id
+    id,
   } = useParams();
 
   // const [crypto, setCrypto] = useState([]);
@@ -60,19 +59,10 @@ function CoinDetails() {
           <p>
             Price :<b> &#x20b9;{price}</b>
           </p>
-          {market_cap_change_percentage_24h > 0 ? (
-            <p>
-              Market Cap Change (24h) :{" "}
-              <b className="text-success">
-                {market_cap_change_percentage_24h}%
-              </b>
-            </p>
-          ) : (
-            <p>
-              Market Cap Change (24h) :{" "}
-              <b className="text-danger">{market_cap_change_percentage_24h}%</b>
-            </p>
-          )}
+          <p>
+            Price Change (24h) :{" "}
+            <b className="text-success">{price_change_24h}%</b>
+          </p>
           {/* <p>
             High 24h :<b> &#x20b9;{high_24h}</b>
           </p>
@@ -106,7 +96,19 @@ function CoinDetails() {
         </div>
 
         <div className="d-flex flex-column">
-        <div style={{width:'50%', height:'500px'}} class="livecoinwatch-widget-1" lcw-coin={symbol} lcw-base="INR" lcw-secondary={symbol} lcw-period="d" lcw-color-tx="#000000" lcw-color-pr="#00d084" lcw-color-bg="#ffffff" lcw-border-w="1" lcw-digits="9" ></div>
+          <div
+            style={{ width: "50%", height: "900px" }}
+            class="livecoinwatch-widget-1"
+            lcw-coin={symbol}
+            lcw-base="INR"
+            lcw-secondary={symbol}
+            lcw-period="d"
+            lcw-color-tx="#000000"
+            lcw-color-pr="#00d084"
+            lcw-color-bg="#ffffff"
+            lcw-border-w="1"
+            lcw-digits="9"
+          ></div>
         </div>
 
         {/* <img src={image} alt="crypto" /> */}

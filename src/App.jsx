@@ -54,7 +54,7 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/contact-me" element={<ContactMe />} />
-                <Route path="/crypto-details/:name/:price/:market_cap_change_percentage_24h/:symbol/:high_24h/:low_24h/:market_cap/:total_volume/:circulating_supply/:total_supply/:id" element={<CoinDetails />} />
+                <Route path="/crypto-details/:name/:price/:price_change_24h/:symbol/:high_24h/:low_24h/:market_cap/:total_volume/:circulating_supply/:total_supply/:id" element={<CoinDetails />} />
               </Routes>
             </div>
           </Router>
