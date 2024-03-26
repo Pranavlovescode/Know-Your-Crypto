@@ -26,53 +26,63 @@ function Home() {
   }, []);
 
   const fetchData = async () => {
+    // try {
+    //   const response = await fetch("https://api.livecoinwatch.com/coins/list", {
+    //     method: "POST",
+    //     headers: new Headers({
+    //       "content-type": "application/json",
+    //       "x-api-key": "36735d2c-0f11-4f46-bf1f-c881d551e21b",
+    //     }),
+    //     body: JSON.stringify({
+    //       currency: "INR",
+    //       sort: "rank",
+    //       order: "ascending",
+    //       offset: 0,
+    //       limit: 10,
+    //       meta: true,
+    //     }),
+    //   });
+    //   const data = await response.json();
+    //   setCrypto(data);
+    //   console.log(data);
+    // } catch (error) {
+    //   console.error("Error fetching data:", error);
+    // }
     try {
-      const response = await fetch("https://api.livecoinwatch.com/coins/list", {
-        method: "POST",
-        headers: new Headers({
-          "content-type": "application/json",
-          "x-api-key": "36735d2c-0f11-4f46-bf1f-c881d551e21b",
-        }),
-        body: JSON.stringify({
-          currency: "INR",
-          sort: "rank",
-          order: "ascending",
-          offset: 0,
-          limit: 10,
-          meta: true,
-        }),
-      });
-      const data = await response.json();
-      setCrypto(data);
-      console.log(data);
+      const res = await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=inr&per_page=10')
+      const data = await res.json()
+      console.log(data)
+      setCrypto(data)
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.log('Some error occured')
     }
   };
-  const loadScript=()=> {
-    const script = document.createElement("script");
-    script.src = "https://www.livecoinwatch.com/static/lcw-widget.js";
-    script.async = true;
-    // Append script to the body
-    document.body.appendChild(script);
-    console.log("Script Loaded");
+  // const loadScript=()=> {
+  //   const script = document.createElement("script");
+  //   script.src = "https://www.livecoinwatch.com/static/lcw-widget.js";
+  //   script.async = true;
+  //   // Append script to the body
+  //   document.body.appendChild(script);
+  //   console.log("Script Loaded");
     
-  }
+  // }
   useEffect(() => {
     // Fetch data initially
+    // loadScript();
+
+    
     fetchData();
-    loadScript();
-    // Set up interval to fetch data every 5 minutes (adjust as needed)
-    const intervalId = setInterval(fetchData, 5 * 60 * 1000);
+    // Set up interval to fetch data every 1 minutes (adjust as needed)
+    const intervalId = setInterval(fetchData, 1 * 60 * 1000);
 
    
-    return () => {
-      // Remove script from the body on component unmount
-      // document.body.removeChild(script);
-      // Cleanup interval on component unmount
+    // return () => {
+    //   // Remove script from the body on component unmount
+    //   // document.body.removeChild(script);
+    //   // Cleanup interval on component unmount
       
-      clearInterval(intervalId);
-    };
+    clearInterval(intervalId);
+    // };
   }, []);
 
 
@@ -106,36 +116,34 @@ function Home() {
                   <li
                     onClick={() =>
                       navigate(
-                        `/crypto-details/${index.name}/${index.rate}/${index.delta.hour}/${index.code}/${index.high_24h}/${index.low_24h}/${index.cap}/${index.volume}/${index.maxSupply}/${index.totalSupply}/${index.id}`
+                        `/crypto-details/${index.name}/${index.current_price}/${index.market_cap_change_percentage_24h}/${index.symbol}/${index.high_24h}/${index.low_24h}/${index.cap}/${index.volume}/${index.maxSupply}/${index.totalSupply}/${index.id}`
                       )
                     }
-                    className={`list-group-item d-flex justify-content-between align-items-start text-white ${
-                      index.delta.hour >= 0 ? "bg-success" : "bg-danger"
-                    }`}
+                    className={`list-group-item d-flex justify-content-between align-items-start bg-primary-emphasis`}
                   >
-                    {/* <div className="ms-2 me-auto">
+                    <div className={`ms-2 me-auto`}>
                       <img
-                        src={index.png64}
+                        src={index.image}
                         alt={index.name}
                         srcset=""
                         style={styles}
                         className="mx-2"
                       />
                       <div className="fw-bold">
-                        {index.name} ({index.code})
+                        {index.name} ({index.symbol})
                       </div>
-                      {index.delta.hour} %
+                      <div className={` ${index.price_change_percentage_24h>0?`text-success`:`text-danger `}`}>{index.price_change_percentage_24h} %</div>                      
                     </div>
-                    <span className="mt-2">&#x20b9; {index.rate}</span> */}
-                    <div
-                      class="livecoinwatch-widget-2"
+                    <span className="mt-2">&#x20b9; {index.current_price}</span>
+                    {/* <div
+                      class="livecoinwatch-widget-6"
                       lcw-coin={index.code}
                       lcw-base="INR"
                       lcw-period="d"
                       lcw-color-tx="#000000"
                       lcw-color-bg="#ffffff"
                       lcw-border-w="0"
-                    ></div>
+                    ></div> */}
                   </li>
                 </ul>
               ))}
